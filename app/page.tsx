@@ -21,6 +21,7 @@ export default function Home() {
     if (!input.trim() || loading) return;
     setLoading(true);
     setMessages((prev) => [...prev, { role: "user", content: input }]);
+    setInput("")
 
     try {
       const res = await fetch("/api/chat", {
@@ -56,7 +57,8 @@ export default function Home() {
                 <ReactMarkdown
                   remarkPlugins={[remarkGfm]}
                   components={{
-                    code({ node, inline, className, children, ...props }) {
+                     
+                    code({  inline, className, children, ...props }: {  inline?: boolean, className?: string, children?: React.ReactNode }) {
                       const match = /language-(\w+)/.exec(className || "");
                       return !inline && match ? (
                         <SyntaxHighlighter
